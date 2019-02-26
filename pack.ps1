@@ -9,11 +9,6 @@ Param(
 
 $ErrorActionPreference = 'Stop'
 
-$configs = $('Release-LowTrust', 'Release')
-
-$testTargetFrameworks = @{'Release'          = $('net45')
-                          'Release-LowTrust' = $('netcoreapp2.1', 'net45')}
-
 function invoke([string] $cmd) {
     echo ''
     echo $cmd
@@ -23,18 +18,17 @@ function invoke([string] $cmd) {
     }
 }
 
-foreach ($folder in $("FParsecCS\obj", "FParsecCS\bin", "FParsec\obj", "FParsec\bin")) {
-    try {
-        Remove-Item $folder -recurse
-    } catch {}
+$config = "Release"
+
+$props = "-c $config -p:VersionSuffix=$versionSuffix"
+
+invoke "dotnet clean FParsec.sln -c $config"
+
+invoke "dotnet build FParsec.sln $props"
+invoke "dotnet pack FParsec.sln $props -o ""$pwd\bin\nupkg"""
+
+foreach ($tf in $('netcoreapp2.1', 'net45')) {
+    invoke "dotnet run --no-build -p Test $props -f $tf"
 }
 
-foreach ($config in $configs) {
-    $props = "-c $config -p:VersionSuffix=$versionSuffix -p:FParsecNuGet=true"
-    invoke "dotnet build FParsec $props"
-    invoke "dotnet pack FParsec $props -o ""$pwd\bin\nupkg"""
-    invoke "dotnet build Test $props"
-    foreach ($tf in $testTargetFrameworks[$config]) {
-        invoke "dotnet run --no-build -p Test -c $config -f $tf"
-    }
-}
+invoke "dotnet run --no-build -p Test.BigData $props -f net45"

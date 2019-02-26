@@ -8,20 +8,8 @@ install:
   - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
 
 script:
-  - dotnet build FParsec.sln -c $CONFIGURATION -v n
-  - |
-    if [ "$RUN_TESTS" == "1" ]; then
-      dotnet run --no-build -p Test -c $CONFIGURATION -f $TFM
-    fi
-
-env:
-  - CONFIGURATION=Release
-    TFM=net45
-  - CONFIGURATION=Release-LowTrust
-    TFM=net45
-  - CONFIGURATION=Release-LowTrust
-    TFM=netcoreapp2.1
-    RUN_TESTS=1
+  - dotnet build FParsec.sln -c Release -v n
+  - dotnet run --no-build -p Test -c Release -f netcoreapp2.1
 
 matrix:
   include:

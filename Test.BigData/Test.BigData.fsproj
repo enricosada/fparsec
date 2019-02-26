@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <AssemblyName>Test</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <DefineConstants>$(DefineConstants);USE_STATIC_MAPPING_FOR_IS_ANY_OF</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);AGGRESSIVE_INLINING</DefineConstants>
+    <DefineConstants>$(DefineConstants);UNALIGNED_READS</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Test\Test.fs" />
+    <Compile Include="..\Test\BufferTests.fs" />
+    <Compile Include="..\Test\CharSetTests.fs" />
+    <Compile Include="..\Test\HexFloatTests.fs" />
+    <Compile Include="..\Test\TextTests.fs" />
+    <Compile Include="..\Test\CloningTests.fs" />
+    <Compile Include="..\Test\StringBufferTests.fs" />
+    <Compile Include="..\Test\CharStreamTests.fs" />
+    <Compile Include="..\Test\PrimitivesTests.fs" />
+    <Compile Include="..\Test\CharParsersTests.fs" />
+    <Compile Include="..\Test\IdentifierValidatorTests.fs" />
+    <Compile Include="..\Test\OperatorPrecedenceParserTests.fs" />
+    <Compile Include="..\Test\RangeTests.fs" />
+    <Compile Include="..\Test\StaticMappingTests.fs" />
+    <Compile Include="..\Test\AllTests.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FParsec.BigData\FParsec.BigData.fsproj" />
+    <ProjectReference Include="..\FParsecCS.BigData\FParsecCS.BigData.csproj" />
+  </ItemGroup>
+
+</Project>

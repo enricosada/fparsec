@@ -2,18 +2,22 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(LowTrust)' == 'false'">net45</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Tailcalls>false</Tailcalls>
     <OtherFlags>/nooptimizationdata</OtherFlags>
+    <DefineConstants>$(DefineConstants);LOW_TRUST</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);SMALL_STATETAG</DefineConstants>
+    <DefineConstants>$(DefineConstants);AGGRESSIVE_INLINING</DefineConstants>
+    <Description>$(Description)
+
+This package uses the basic “low-trust” configuration of FParsec, which does not use any unverifiable code and is optimized for maximum portability. If you need to parse very large files or if you employ FParsec for performance-critical jobs, consider using the alternate “Big Data Edition” NuGet package (see https://nuget.org/packages/fparsec-big-data-edition).</Description>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(LowTrust)' == 'false'">
-    <PackageId>FParsec-Big-Data-Edition</PackageId>
-    <DefineConstants>$(DefineConstants);USE_STATIC_MAPPING_FOR_IS_ANY_OF</DefineConstants>
+  <PropertyGroup  Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>$(DefineConstants);UNALIGNED_READS</DefineConstants>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
-
-  <Import Project="..\Build\FParsec.Common.targets" />
 
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />

@@ -1,0 +1,14 @@
+<Project ToolsVersion="15.0">
+
+  <PropertyGroup Condition="'$(SignAssembly)' == 'true'">
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\Build\fparsec.snk</AssemblyOriginatorKeyFile>
+    <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
+    <DefineConstants>$(DefineConstants);STRONG_NAME</DefineConstants>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(SignAssembly)' != 'true'">
+    <AssemblyVersion>$(FileVersion)</AssemblyVersion>
+  </PropertyGroup>
+
+</Project>

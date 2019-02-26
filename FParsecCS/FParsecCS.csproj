@@ -2,15 +2,21 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(LowTrust)' == 'false'">net45</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>    
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
     <IsPackable>false</IsPackable>
+    <DefineConstants>$(DefineConstants);LOW_TRUST</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);SMALL_STATETAG</DefineConstants>
+    <DefineConstants>$(DefineConstants);AGGRESSIVE_INLINING</DefineConstants>
   </PropertyGroup>
 
-  <Import Project="..\Build\FParsec.Common.targets" />
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>$(DefineConstants);UNALIGNED_READS</DefineConstants>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETStandard'">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="System.Globalization.Extensions" Version="4.*" />
   </ItemGroup>
 

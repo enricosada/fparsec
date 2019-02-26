@@ -1,18 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net45;netcoreapp2.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(LowTrust)' == 'false'">net45</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
+    <DefineConstants>$(DefineConstants);LOW_TRUST</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);SMALL_STATETAG</DefineConstants>
+    <DefineConstants>$(DefineConstants);AGGRESSIVE_INLINING</DefineConstants>
   </PropertyGroup>
 
-  <Import Project="..\Build\FParsec.Common.targets" />
-
-  <PropertyGroup Condition="'$(LowTrust)' == 'false'">
-    <DefineConstants>$(DefineConstants);USE_STATIC_MAPPING_FOR_IS_ANY_OF</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>$(DefineConstants);UNALIGNED_READS</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
 
@@ -34,7 +35,7 @@
     <Compile Include="AllTests.fs" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="System.Globalization.Extensions" Version="4.*" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.*" />
   </ItemGroup>
