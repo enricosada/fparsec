@@ -11,7 +11,7 @@ before_build:
 
 build_script:
   - cmd: echo vs %VersionSuffix%"
-  - ps: ./pack.ps1 -versionSuffix $VersionSuffix
+  - ps: ./pack.ps1 -versionSuffix $env:VersionSuffix
 
 artifacts:
   - path: bin\nupkg\*.nupkg
