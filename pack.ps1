@@ -24,7 +24,7 @@ $props = "-c $config -p:VersionSuffix=$versionSuffix"
 
 invoke "dotnet clean FParsec.sln -c $config"
 
-invoke "dotnet build FParsec.sln $props"
+invoke "dotnet build FParsec.sln $props -v n"
 invoke "dotnet pack FParsec.sln $props -o ""$pwd\bin\nupkg"""
 
 foreach ($tf in $('netcoreapp2.1', 'net45')) {
